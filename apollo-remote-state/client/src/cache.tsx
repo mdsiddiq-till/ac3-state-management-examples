@@ -1,4 +1,3 @@
-
 import { InMemoryCache, makeVar } from "@apollo/client";
 import { VisibilityFilters, VisibilityFilter } from "./models/VisibilityFilter";
 
@@ -7,13 +6,23 @@ export const cache: InMemoryCache = new InMemoryCache({
     Query: {
       fields: {
         visibilityFilter: {
-          read () {
+          read() {
             return visibilityFilterVar();
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+    Todo: {
+      // keyFields: ['text'],
+      fields: {
+        text: {
+          read(text) {
+            return "Mr. " + text;
+          },
+        },
+      },
+    },
+  },
 });
 
 /**
@@ -22,4 +31,6 @@ export const cache: InMemoryCache = new InMemoryCache({
 
 export const visibilityFilterVar = makeVar<VisibilityFilter>(
   VisibilityFilters.SHOW_ALL
-)
+);
+
+export const notifyVar = makeVar<string>("");
